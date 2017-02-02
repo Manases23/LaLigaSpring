@@ -3,6 +3,7 @@ package laliga.controladores;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,6 @@ import laliga.modelo.repositorios.FederacionRepositorio;
 		@Autowired
 		private EquipoRepositorio equipoRepo;
 
-		
 		
 		@RequestMapping(method=RequestMethod.GET)
 		public String listarFederaciones(Model model){

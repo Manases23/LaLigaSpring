@@ -4,6 +4,20 @@
 	<groupId>es.badajoz</groupId>
 	<artifactId>LaLiga</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<repositories>
+		<repository>
+	        <id>spring-milestones</id>
+	        <name>Spring Milestones</name>
+	        <url>http://repo.spring.io/milestone</url>
+	        <snapshots>
+	            <enabled>false</enabled>
+	        </snapshots>
+	    </repository>
+	</repositories>
+	
+	
+	
 	<dependencies>
 
 		<dependency>
@@ -100,6 +114,23 @@
 			<version>2.3.1</version>
 		</dependency>
 
+		<dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-web</artifactId>
+	        <version>4.0.0.RC2</version>
+	    </dependency>
+	    
+		<dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-config</artifactId>
+	        <version>4.0.0.RC2</version>
+	    </dependency>
+	    
+	    <dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-taglibs</artifactId>
+    <version>4.0.0.RC2</version>
+</dependency>
 
 	</dependencies>
 

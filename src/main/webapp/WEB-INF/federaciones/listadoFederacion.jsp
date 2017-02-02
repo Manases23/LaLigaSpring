@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,6 +16,7 @@
 	scope="request" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
+<script src="${path}/static/js/miscriptfederacion.js"></script>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -40,8 +43,10 @@
 				<td style="width: 10%">#</td>
 				<td style="width: 10%">Nombre</td>
 				<td style="width: 10%">País</td>
+			<sec:authorize access="hasRole('ADMIN')">
 				<td style="width: 10%">Editar</td>
 				<td style="width: 10%">Borrar</td>
+			</sec:authorize>
 			</tr>
 		</thead>
 		<tbody>
@@ -50,9 +55,10 @@
 					<td>${federacion.id}</td>
 					<td>${federacion.nombre}</td>
 					<td>${federacion.pais}</td>
-					
+				<sec:authorize access="hasRole('ADMIN')">
 					<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
 					<td><button type="button" class="btn btn-danger btn-borrar">Borrar</button></td>
+				</sec:authorize>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -62,10 +68,12 @@
 					id="cantidad-federaciones">${federaciones.size()}</span></td>
 			</tr>
 			<tr>
+			<sec:authorize access="hasRole('ADMIN')">
 				<td colspan="5">
 					<button type="button" class="btn btn-primary" data-toggle="modal"
 						data-target="#modal-federaciones">Registrar Federaciones</button>
 				</td>
+			</sec:authorize>
 			</tr>
 		</tfoot>
 	</table>
@@ -102,44 +110,11 @@
 		</div>
 	</div>
 	
+		<a href="${path}/index" class= "btn btn-default" >Página de inicio</a>
+	
 	
 	<script type="text/javascript">
 	
-	$(document).ready(function(){
-		
-		$('.btn-editar').on('click', function(){
-				var id = $(this).parents('tr').data('id');
-				var url = 'federaciones/'+id;
-				
-				$.get(url)
-					.done(function(federacion){
-						$('#id').val(federacion.id);
-						$('#nombre').val(federacion.nombre);
-						$('#edad').val(federacion.pais);
-						$('#form-federaciones .modal-title').text("Editando federaciones...")
-						
-						$('#modal-federaciones').modal('show');
-					});
-		});
-		
-		
-		
-		$('.btn-borrar').on('click', function(){
-			var id = $(this).parents('tr').data('id');
-			
-			$.ajax({
-				url : "federaciones/"+id,
-				type: 'DELETE',
-			    success: function(result) {
-			    	$('tr[data-id="'+id+'"]').remove();
-					var federaciones = parseInt( $('#cantidad-federaciones').text() );
-			    	$('#cantidad-federaciones').text(federaciones - 1);
-			    }
-			});
-			
-		});
-		
-	});
 	
 	</script>
 	

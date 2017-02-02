@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,7 +14,8 @@
 <c:set var="path" value="${pageContext.request.contextPath}"
 	scope="request" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	
+
+<script src="${path}/static/js/miscriptequipo.js"></script>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -29,7 +31,7 @@
 	crossorigin="anonymous"></script>
 	</head>
 <body>
-	<h1>Listado de jugadores</h1>
+	<h1>Listado de equipos</h1>
 
 	${titulo}
 
@@ -42,10 +44,11 @@
 				<td style="width: 10%">Nombre</td>
 				<td style="width: 10%">Presupuesto</td>
 				<td style="width: 10%">Division</td>
-				<td style="width: 10%">Federacion</td>
-				
+				<td style="width: 10%"><a href="<c:url value="/federaciones" />">Federacion</a></td>
+			<sec:authorize access="hasRole('ADMIN')">
 				<td style="width: 10%">Editar</td>
 				<td style="width: 10%">Borrar</td>
+			</sec:authorize>
 			</tr>
 		</thead>
 		<tbody>
@@ -57,9 +60,10 @@
 					<td>${equipo.presupuesto}</td>
 					<td>${equipo.division}</td>
 					<td>${equipo.federacion.nombre}</td>
-					
+				<sec:authorize access="hasRole('ADMIN')">
 					<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
 					<td><button type="button" class="btn btn-danger btn-borrar">Borrar</button></td>
+				</sec:authorize>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -69,10 +73,12 @@
 					id="cantidad-equipos">${equipos.size()}</span></td>
 			</tr>
 			<tr>
+			<sec:authorize access="hasRole('ADMIN')">
 				<td colspan="5">
 					<button type="button" class="btn btn-primary" data-toggle="modal"
 						data-target="#modal-equipos">Registrar Equipos</button>
 				</td>
+			</sec:authorize>
 			</tr>
 		</tfoot>
 	</table>
@@ -123,47 +129,11 @@
 		</div>
 	</div>
 	
+	<a href="${path}/index" class= "btn btn-default" >Página de inicio</a>
+	
 	
 	<script type="text/javascript">
 	
-	$(document).ready(function(){
-		
-		$('.btn-editar').on('click', function(){
-				var id = $(this).parents('tr').data('id');
-				var url = 'equipos/'+id;
-				
-				$.get(url)
-					.done(function(equipos){
-						$('#id').val(equipos.id);
-						$('#estadio').val(equipos.estadio);
-						$('#nombre').val(equipos.nombre);
-						$('#presupuesto').val(equipos.presupuesto);
-						$('#division').val(equipos.division);
-						$('#federacion').val(equipos.federacion.nombre);
-						$('#form-equipos .modal-title').text("Editando equipos...")
-						
-						$('#modal-equipos').modal('show');
-					});
-		});
-		
-		
-		
-		$('.btn-borrar').on('click', function(){
-			var id = $(this).parents('tr').data('id');
-			
-			$.ajax({
-				url : "equipos/"+id,
-				type: 'DELETE',
-			    success: function(result) {
-			    	$('tr[data-id="'+id+'"]').remove();
-					var equipos = parseInt( $('#cantidad-equipos').text() );
-			    	$('#cantidad-equipos').text(equipos - 1);
-			    }
-			});
-			
-		});
-		
-	});
 	
 	</script>
 	

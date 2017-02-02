@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,8 +13,11 @@
 <title>${titulo}</title>
 <c:set var="path" value="${pageContext.request.contextPath}"
 	scope="request" />
+	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
+<script src="${path}/static/js/miscriptjugador.js"></script>
+
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -41,10 +45,12 @@
 				<td style="width: 10%">Nombre</td>
 				<td style="width: 10%">Edad</td>
 				<td style="width: 10%">Goles</td>
-				<td style="width: 10%">Equipo</td>
+				<td style="width: 10%"><a href="<c:url value="/equipos" />">Equipo</a></td>
 				<td style="width: 10%">Posicion</td>
+			<sec:authorize access="hasRole('ADMIN')">	
 				<td style="width: 10%">Editar</td>
 				<td style="width: 10%">Borrar</td>
+			</sec:authorize>
 			</tr>
 		</thead>
 		<tbody>
@@ -56,8 +62,12 @@
 					<td>${jugador.goles}</td>
 					<td>${jugador.equipo.nombre}</td>
 					<td>${jugador.posicion}</td>
-					<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
-					<td><button type="button" class="btn btn-danger btn-borrar">Borrar</button></td>
+					<sec:authorize access="hasRole('ADMIN')">
+						<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
+						<td><button type="button" class="btn btn-danger btn-borrar">Borrar</button></td>
+					</sec:authorize>
+					
+					
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -67,10 +77,12 @@
 					id="cantidad-jugadores">${jugadores.size()}</span></td>
 			</tr>
 			<tr>
+			<sec:authorize access="hasRole('ADMIN')">
 				<td colspan="5">
 					<button type="button" class="btn btn-primary" data-toggle="modal"
 						data-target="#modal-jugadores">Registrar Jugadores</button>
 				</td>
+			</sec:authorize>
 			</tr>
 		</tfoot>
 	</table>
@@ -121,53 +133,11 @@
 		</div>
 	</div>
 	
+		<a href="${path}/index" class= "btn btn-default" >Página de inicio</a>
 	
 	<script type="text/javascript">
 	
-	$(document).ready(function(){
-		
-		$('.btn-editar').on('click', function(){
-				var id = $(this).parents('tr').data('id');
-				var url = 'jugadores/'+id;
-				
-				$.get(url)
-					.done(function(jugadores){
-						$('#id').val(jugadores.id);
-						$('#nombre').val(jugadores.nombre);
-						$('#edad').val(jugadores.edad);
-						$('#goles').val(jugadores.goles);
-						$('#equipo').val(jugadores.equipo);
-						$('#posicion').val(jugadores.posicion);
-						$('#form-jugadores .modal-title').text("Editando jugadores...")
-						
-						$('#modal-jugadores').modal('show');
-					});
-		});
-		
-		
-		
-		$('.btn-borrar').on('click', function(){
-			var id = $(this).parents('tr').data('id');
-			
-			$.ajax({
-				url : "jugadores/"+id,
-				type: 'DELETE',
-			    success: function(result) {
-			    	$('tr[data-id="'+id+'"]').remove();
-					var jugadores = parseInt( $('#cantidad-jugadores').text() );
-			    	$('#cantidad-jugadores').text(jugadores - 1);
-			    }
-			});
-			
-		});
-		
-	});
-	
 	</script>
-	
-	
-	
-	
 	
 
 </body>

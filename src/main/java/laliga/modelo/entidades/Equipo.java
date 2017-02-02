@@ -2,7 +2,6 @@ package laliga.modelo.entidades;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,11 +15,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.PreRemove;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import laliga.modelo.enumeraciones.EquipoCategoria;
 
@@ -51,7 +50,7 @@ public class Equipo {
 	
 	@ManyToOne (fetch=FetchType.EAGER)
 	@JoinColumn (name = "id_federacion", nullable=true)
-	@JsonIgnore
+	@JsonManagedReference
 	private Federacion federacion;
 
 	
