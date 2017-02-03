@@ -22,6 +22,7 @@ import laliga.modelo.entidades.Jugador;
 import laliga.modelo.enumeraciones.EquipoCategoria;
 import laliga.modelo.repositorios.EquipoRepositorio;
 import laliga.modelo.repositorios.FederacionRepositorio;
+import laliga.modelo.repositorios.JugadorRepositorio;
 import laliga.propertyeditors.FederacionPropertyEditor;
 
 
@@ -35,6 +36,8 @@ public class EquipoController {
 	private FederacionRepositorio federacionRepo;
 	@Autowired
 	private EquipoRepositorio equipoRepo;
+	@Autowired
+	private JugadorRepositorio jugadorRepo;
 
 	
 	
@@ -81,6 +84,15 @@ public class EquipoController {
 		
 				
 		}
+	
+	
+	@RequestMapping(method=RequestMethod.GET, value="/detalle/{id}")
+	public String detalleEquipo(Model model,@PathVariable Long id){
+		Equipo equipo = equipoRepo.findOne(id);
+		model.addAttribute("equipo", equipo);
+		return "equipos/detalleEquipo";
+		//return equipo;
+	}
 	
 	
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")

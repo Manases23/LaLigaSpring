@@ -82,6 +82,12 @@ public class JugadorController {
 				
 		}
 	
+	@RequestMapping(method=RequestMethod.GET, value="/detalle/{id}")
+	public String detalleJugador(Model model,@PathVariable Long id){
+		model.addAttribute("jugador", jugadorRepo.findOne(id));
+		return "jugadores/detalleJugador";
+	}
+	
 	
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	@ResponseBody

@@ -40,8 +40,9 @@
 		<thead>
 			<tr>
 				<td style="width: 10%">#</td>
-				<td style="width: 10%">Estadio</td>
 				<td style="width: 10%">Nombre</td>
+				<td style="width: 10%">Escudo</td>
+				<td style="width: 10%">Estadio</td>
 				<td style="width: 10%">Presupuesto</td>
 				<td style="width: 10%">Division</td>
 				<td style="width: 10%"><a href="<c:url value="/federaciones" />">Federacion</a></td>
@@ -55,8 +56,9 @@
 			<c:forEach items="${equipos}" var="equipo">
 				<tr data-id="${equipo.id}">
 					<td>${equipo.id}</td>
+					<td><a href="<c:url value="/equipos/detalle/${equipo.id}" />">${equipo.nombre}</td>
+					<td><img alt="" src="${equipo.imagen}" width="50px"></td>
 					<td>${equipo.estadio}</td>
-					<td>${equipo.nombre}</td>
 					<td>${equipo.presupuesto}</td>
 					<td>${equipo.division}</td>
 					<td>${equipo.federacion.nombre}</td>
@@ -97,10 +99,15 @@
 						<h4 class="modal-title">Informacion de Equipos</h4>
 					</div>
 					<div class="modal-body">
-						<label for="nombre">Estadio: </label> <input id="estadio" name="estadio"
-							class="form-control"> 
 						<label for="nombre">Nombre: </label> <input id="nombre" name="nombre"
 							class="form-control"> 
+							
+						<label for="nombre">Escudo: </label> <input id="imagen" name="imagen"
+							class="form-control"> 
+							
+						<label for="nombre">Estadio: </label> <input id="estadio" name="estadio"
+							class="form-control"> 
+
 						<label for="nombre">Presupuesto: </label> <input id="presupuesto" name="presupuesto"
 							class="form-control"> 
 							

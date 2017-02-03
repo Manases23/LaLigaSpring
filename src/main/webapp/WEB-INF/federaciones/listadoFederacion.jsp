@@ -43,6 +43,7 @@
 				<td style="width: 10%">#</td>
 				<td style="width: 10%">Nombre</td>
 				<td style="width: 10%">País</td>
+				<td style="width: 10%">Logo</td>
 			<sec:authorize access="hasRole('ADMIN')">
 				<td style="width: 10%">Editar</td>
 				<td style="width: 10%">Borrar</td>
@@ -55,9 +56,10 @@
 					<td>${federacion.id}</td>
 					<td>${federacion.nombre}</td>
 					<td>${federacion.pais}</td>
+					<td> <img alt="" src="${federacion.imagen}" width="50px"> </td>				
 				<sec:authorize access="hasRole('ADMIN')">
 					<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
-					<td><button type="button" class="btn btn-danger btn-borrar">Borrar</button></td>
+					<td><button type="button" class="btn btn-danger btn-borrar-mostrar-modal">Borrar</button></td>
 				</sec:authorize>
 				</tr>
 			</c:forEach>
@@ -97,7 +99,13 @@
 						<label for="nombre">País: </label> <input id="pais" name="pais"
 							class="form-control"> 
 							
-						</select> <input id="id" name="id" type="hidden"> <input id="csrf"
+						<label for="nombre">Imagen: </label> <input id="imagen" name="imagen"
+							class="form-control"> 
+							
+						</select> 
+						
+						<input id="id" name="id" type="hidden"> 
+						<input id="csrf"
 							name="_csrf" type="hidden" value="${_csrf.token}">
 					</div>
 					<div class="modal-footer">
@@ -110,13 +118,51 @@
 		</div>
 	</div>
 	
+	
+	
+	
+	
+	<div class="modal fade" id="modal-federacionesborrar" tabindex="-1"
+		role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="form-federacionesborrar" method="post">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Borrar federacion</h4>
+					</div>
+					<div class="modal-body">
+							
+						</select> 
+						
+						<input id="idborrar" name="id" type="hidden">
+						<input id="csrf" name="_csrf" type="hidden" value="${_csrf.token}">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button id="btn-borrar" type="submit" class="btn btn-primary">Borrar
+							federacion</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		<a href="${path}/index" class= "btn btn-default" >Página de inicio</a>
 	
-	
-	<script type="text/javascript">
-	
-	
-	</script>
+
 	
 	
 	

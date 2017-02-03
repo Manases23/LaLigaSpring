@@ -57,7 +57,7 @@
 			<c:forEach items="${jugadores}" var="jugador">
 				<tr data-id="${jugador.id}">
 					<td>${jugador.id}</td>
-					<td>${jugador.nombre}</td>
+					<td><a href="<c:url value="/jugadores/detalle/${jugador.id}" />">${jugador.nombre}</a></td>
 					<td>${jugador.edad}</td>
 					<td>${jugador.goles}</td>
 					<td>${jugador.equipo.nombre}</td>

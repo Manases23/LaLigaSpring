@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PreRemove;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -42,6 +44,7 @@ public class Equipo {
 	private Double presupuesto;
 	
 	@OneToMany(mappedBy = "equipo", fetch=FetchType.EAGER)
+	@Fetch(FetchMode.JOIN)
 	private Set<Jugador> jugadores;
 	
 	
@@ -52,7 +55,12 @@ public class Equipo {
 	@JoinColumn (name = "id_federacion", nullable=true)
 	@JsonManagedReference
 	private Federacion federacion;
+	
+	@NotNull
+	@NotEmpty
+	private String imagen;
 
+	
 	
 	@PreRemove
 	public void antesDeBorrar () {
@@ -60,6 +68,20 @@ public class Equipo {
 	}
 	
 	
+	
+	
+	public String getImagen() {
+		return imagen;
+	}
+
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+
+
+
 	public Long getId() {
 		return id;
 	}

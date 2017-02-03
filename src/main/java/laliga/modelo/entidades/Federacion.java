@@ -35,6 +35,11 @@ public class Federacion {
 	@NotEmpty
 	private String pais;
 	
+	@NotNull
+	@NotEmpty
+	private String imagen;
+	
+	
 	@OneToMany(mappedBy = "federacion")
 	@JsonBackReference
 	private Set<Equipo> equipos;
@@ -47,6 +52,18 @@ public class Federacion {
 	
 	
 	
+	public String getImagen() {
+		return imagen;
+	}
+
+
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -83,10 +100,7 @@ public class Federacion {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((equipos == null) ? 0 : equipos.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((pais == null) ? 0 : pais.hashCode());
 		return result;
 	}
 
@@ -99,25 +113,10 @@ public class Federacion {
 		if (getClass() != obj.getClass())
 			return false;
 		Federacion other = (Federacion) obj;
-		if (equipos == null) {
-			if (other.equipos != null)
-				return false;
-		} else if (!equipos.equals(other.equipos))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		if (pais == null) {
-			if (other.pais != null)
-				return false;
-		} else if (!pais.equals(other.pais))
 			return false;
 		return true;
 	}

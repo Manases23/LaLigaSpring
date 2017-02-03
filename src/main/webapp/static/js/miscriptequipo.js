@@ -11,6 +11,7 @@ $(document).ready(function(){
 						$('#nombre').val(equipo.nombre);
 						$('#presupuesto').val(equipo.presupuesto);
 						$('#division').val(equipo.division);
+						$('#imagen').val(equipo.imagen);
 					console.log(equipo);
 					$('#form-equipos .modal-title').text("Editando equipos...")
 						
