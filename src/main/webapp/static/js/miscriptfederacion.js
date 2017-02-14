@@ -24,16 +24,18 @@
 		
 		
 		$('#btn-borrar').on('click', function(){
+			
 			var id = $('#idborrar').val();  
 			var csrf = $('#csrf').val();
-				$.ajax({
+			$.ajax({
 					url : "federaciones/"+id,
 					type: 'DELETE',
 					headers: {'X-CSRF-TOKEN': csrf},
 				    success: function(result) {
 				    	$('tr[data-id="'+id+'"]').remove();
 						var federaciones = parseInt( $('#cantidad-federaciones').text() );
-				    	$('#cantidad-federaciones').text(federaciones - 1);				    	
+				    	$('#cantidad-federaciones').text(federaciones - 1);	
+				    	$('#modal-federacionesborrar').modal('hide');
 				    },
 				    error: function (error) {
 				    	console.log(error);

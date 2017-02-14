@@ -42,8 +42,12 @@ public class ConfiguracionBD {
 		Properties jpaProterties = new Properties();
 		jpaProterties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
 		jpaProterties.put("hibernate.hbm2ddl.auto", "update");
-		entityManagerFactoryBean.setJpaProperties(jpaProterties);
-		return entityManagerFactoryBean;
+        jpaProterties.put("show_sql", "true");
+        jpaProterties.put("format_sql", "true");
+        jpaProterties.put("logging.level.org.hibernate.SQL", "DEBUG");
+        
+        entityManagerFactoryBean.setJpaProperties(jpaProterties);
+        return entityManagerFactoryBean;
 	}
 	
 	@Bean

@@ -21,20 +21,33 @@ $(document).ready(function(){
 		
 		
 		
-		$('.btn-borrar').on('click', function(){
+		$('.btn-borrar-mostrar-modal').on('click', function(){
 			var id = $(this).parents('tr').data('id');
+			$('#idborrar').val(id);
+			$('#modal-equiposborrar').modal('show');
+		});	
+		
+		
+		$('#btn-borrar').on('click', function(){
 			
+			var id = $('#idborrar').val();  
+			var csrf = $('#csrf').val();
 			$.ajax({
-				url : "equipos/"+id,
-				type: 'DELETE',
-			    success: function(result) {
-			    	$('tr[data-id="'+id+'"]').remove();
-					var equipos = parseInt( $('#cantidad-equipos').text() );
-			    	$('#cantidad-equipos').text(equipos - 1);
-			    }
+					url : "equipos/"+id,
+					type: 'DELETE',
+					headers: {'X-CSRF-TOKEN': csrf},
+				    success: function(result) {
+				    	$('tr[data-id="'+id+'"]').remove();
+						var equipos = parseInt( $('#cantidad-equipos').text() );
+				    	$('#cantidad-equipos').text(equipos - 1);	
+				    	$('#modal-equiposborrar').modal('hide');
+				    },
+				    error: function (error) {
+				    	console.log(error);
+				    }
 			});
 			
-		});
 		
-	});
+		});	
 	
+});

@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,6 +35,7 @@
 
 <div class="text-center">
 			<h1>${jugador.nombre}</h1>
+			<img alt="" src="${jugador.foto}" width="450px">
 			<h5>Tiene ${jugador.edad} anos</h5>
 			<h5>Ha marcado ${jugador.goles} goles este año </h5>
 			<h5>Juega en el ${jugador.equipo.nombre}, donde ocupa la posición de ${jugador.posicion}</h5>
@@ -37,6 +43,7 @@
 </div>		
 
 
+		<a href="${path}/index" class= "btn btn-default" >Página de inicio</a>
 
 
 

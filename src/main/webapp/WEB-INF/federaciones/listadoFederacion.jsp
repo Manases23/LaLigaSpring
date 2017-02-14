@@ -143,7 +143,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button id="btn-borrar" type="submit" class="btn btn-primary">Borrar
+						<button id="btn-borrar" type="button" class="btn btn-primary">Borrar
 							federacion</button>
 					</div>
 				</form>

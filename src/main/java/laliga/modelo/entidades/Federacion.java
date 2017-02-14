@@ -27,11 +27,11 @@ public class Federacion {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull  
+	@NotEmpty 
 	private String nombre;
 
-	@NotNull
+	@NotNull  
 	@NotEmpty
 	private String pais;
 	
@@ -47,7 +47,11 @@ public class Federacion {
 	
 	@PreRemove
 	public void antesDeBorrar () {
-		equipos.forEach(eq -> eq.setFederacion(null));
+		if (this.getEquipos() != null) {
+			if (this.getEquipos().size() > 0) {
+				this.equipos.forEach(eq -> eq.setFederacion(null));	
+			}	
+		}
 	}
 	
 	

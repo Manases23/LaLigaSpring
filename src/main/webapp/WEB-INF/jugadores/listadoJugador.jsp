@@ -12,11 +12,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${titulo}</title>
 <c:set var="path" value="${pageContext.request.contextPath}"
-	scope="request" />
-	
+	scope="request" />	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
-<script src="${path}/static/js/miscriptjugador.js"></script>
+	<script src="${path}/static/js/miscriptjugador.js"></script>
 
 
 <link rel="stylesheet"
@@ -43,6 +42,7 @@
 			<tr>
 				<td style="width: 10%">#</td>
 				<td style="width: 10%">Nombre</td>
+				<td style="width: 10%">Foto</td>
 				<td style="width: 10%">Edad</td>
 				<td style="width: 10%">Goles</td>
 				<td style="width: 10%"><a href="<c:url value="/equipos" />">Equipo</a></td>
@@ -58,13 +58,14 @@
 				<tr data-id="${jugador.id}">
 					<td>${jugador.id}</td>
 					<td><a href="<c:url value="/jugadores/detalle/${jugador.id}" />">${jugador.nombre}</a></td>
+					<td> <img alt="" src="${jugador.foto}" width="50px"></td>
 					<td>${jugador.edad}</td>
 					<td>${jugador.goles}</td>
 					<td>${jugador.equipo.nombre}</td>
 					<td>${jugador.posicion}</td>
 					<sec:authorize access="hasRole('ADMIN')">
 						<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
-						<td><button type="button" class="btn btn-danger btn-borrar">Borrar</button></td>
+						<td><button type="button" class="btn btn-danger btn-borrar-mostrar-modal">Borrar</button></td>
 					</sec:authorize>
 					
 					
@@ -103,6 +104,8 @@
 					<div class="modal-body">
 						<label for="nombre">Nombre: </label> <input id="nombre" name="nombre"
 							class="form-control"> 
+						<label for="nombre">Foto: </label> <input id="foto" name="foto"
+							class="form-control"> 
 						<label for="nombre">Edad: </label> <input id="edad" name="edad"
 							class="form-control"> 
 						<label for="nombre">Goles: </label> <input id="goles" name="goles"
@@ -132,6 +135,39 @@
 			</div>
 		</div>
 	</div>
+	
+	
+		
+	
+	<div class="modal fade" id="modal-jugadoresborrar" tabindex="-1"
+		role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="form-jugadoresborrar" method="post">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Borrar jugador</h4>
+					</div>
+					<div class="modal-body">
+							
+						</select> 
+						
+						<input id="idborrar" name="id" type="hidden">
+						<input id="csrf" name="_csrf" type="hidden" value="${_csrf.token}">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button id="btn-borrar" type="button" class="btn btn-primary">Borrar
+							jugador</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
 	
 		<a href="${path}/index" class= "btn btn-default" >Página de inicio</a>
 	

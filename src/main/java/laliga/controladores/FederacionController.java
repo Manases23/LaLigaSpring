@@ -22,60 +22,74 @@ import laliga.modelo.repositorios.EquipoRepositorio;
 import laliga.modelo.repositorios.FederacionRepositorio;
 
 @Controller
-	@RequestMapping ("/federaciones")
-	public class FederacionController {
+@RequestMapping("/federaciones")
+public class FederacionController {
 
+	@Autowired
+	private FederacionRepositorio federacionRepo;
+	@Autowired
+	private EquipoRepositorio equipoRepo;
 
-		@Autowired
-		private FederacionRepositorio federacionRepo;
-		@Autowired
-		private EquipoRepositorio equipoRepo;
+	@RequestMapping(method = RequestMethod.GET)
+	public String listarFederaciones(Model model) {
 
+		Iterable<Federacion> lista = federacionRepo.findAll();
+		model.addAttribute("titulo", "Lista de Federaciones");
+		model.addAttribute("federaciones", lista);
+
+		return "federaciones/listadoFederacion";
+
+	}
+	
+	
+	@RequestMapping(value="/cargar", method = RequestMethod.GET)
+	public String prueba(Model model) {
+
+		Federacion f = new Federacion();
+		f.setNombre("nombrep");
+		f.setPais("paisp");
+		f.setImagen("imagenp.jpg");
+		federacionRepo.save(f);
+		System.out.println("ha insertado federacion");
+		federacionRepo.delete(f);
+		System.out.println("ha borrado federacion");
 		
-		@RequestMapping(method=RequestMethod.GET)
-		public String listarFederaciones(Model model){
+		Iterable<Federacion> lista = federacionRepo.findAll();
+		model.addAttribute("titulo", "Lista de Federaciones");
+		model.addAttribute("federaciones", lista);
+
+		return "federaciones/listadoFederacion";
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public String guardar(Model model, @Valid @ModelAttribute Federacion federacion, BindingResult bindingResult) {
+
+		federacionRepo.save(federacion);
+		Iterable<Federacion> lista = federacionRepo.findAll();
+		model.addAttribute("titulo", "Listado de Federaciones");
+		model.addAttribute("federaciones", lista);
+
+		return "federaciones/listadoFederacion";
+
+	}
+
+	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
+	public ResponseEntity<String> deletarIngrediente(@PathVariable Long id){
+		try {
+			federacionRepo.delete(id);
+			return new ResponseEntity<String>(HttpStatus.OK);
 			
-			Iterable<Federacion> lista =federacionRepo.findAll();
-			model.addAttribute("titulo", "Lista de Federaciones");
-			model.addAttribute("federaciones", lista);
-			
-			return "federaciones/listadoFederacion";
+		}catch(Exception ex){
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 			
 		}
-		
-		@RequestMapping(method=RequestMethod.POST)
-		public String guardar(Model model, 
-				@Valid @ModelAttribute Federacion federacion, BindingResult bindingResult){
-			
-			federacionRepo.save(federacion);
-			Iterable<Federacion> lista = federacionRepo.findAll();
-			model.addAttribute("titulo", "Listado de Federaciones");
-			model.addAttribute("federaciones", lista);
-			
-			return "federaciones/listadoFederacion";
-			
-		}
-		
-		@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-		public ResponseEntity<String> borrarFederacion(@PathVariable Long id){
+	}
 
-			try {
-				federacionRepo.delete(id);
-				return new ResponseEntity<String>(HttpStatus.OK);
-				
-			}catch(Exception e){
-				return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-				}
-			
-					
-			}
-		
-		
-		@RequestMapping(method=RequestMethod.GET, value="/{id}")
-		@ResponseBody
-		public Federacion buscarFederacion(@PathVariable Long id){
-			return federacionRepo.findOne(id);
-			
-		}
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	@ResponseBody
+	public Federacion buscarFederacion(@PathVariable Long id) {
+		return federacionRepo.findOne(id);
+
+	}
 
 }

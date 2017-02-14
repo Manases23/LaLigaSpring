@@ -45,6 +45,7 @@
 				
 		<a href="${path}/federaciones" class= "btn btn-default" >Federaciones</a>
 
+		<a href="${path}/buscar" class= "btn btn-default" >Buscador</a>
 </div>
 
 

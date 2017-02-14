@@ -30,6 +30,10 @@ public class Jugador {
 	@NotNull
 	@NotEmpty
 	private String nombre;
+	
+	@NotNull
+	@NotEmpty
+	private String foto;
 
 	@NotNull
 	private Integer edad;
@@ -60,6 +64,16 @@ public class Jugador {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public Integer getEdad() {
